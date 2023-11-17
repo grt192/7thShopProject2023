@@ -7,9 +7,32 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import edu.wpi.first.wpilibj.XboxController;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 public class ExampleSubsystem extends SubsystemBase {
+  
+  //motors
+  private final WPI_TalonSRX rightMotor;
+  private final WPI_TalonSRX rightFollower; 
+  private final WPI_TalonSRX leftMotor; 
+  private final WPI_TalonSRX leftFollower; 
+
+  //controller (more like CONTROLSLOLOL)
+  private final XboxController controller; 
+
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public ExampleSubsystem() {
+    rightMotor = new WPI_TalonSRX(14); //change ID ports
+    rightFollower = new WPI_TalonSRX(14);
+    rightFollower.follow(rightMotor);
+
+    leftMotor = new WPI_TalonSRX(14);
+    leftFollower = new WPI_TalonSRX(14);
+    leftFollower.follow(leftMotor);
+
+    controller = new XboxController(0); //change port #
+  }
 
   /**
    * Example command factory method.
@@ -35,9 +58,21 @@ public class ExampleSubsystem extends SubsystemBase {
     return false;
   }
 
+  public void forwardBackward(double speed){
+    rightMotor.set(speed);
+    leftMotor.set(speed);
+  }
+
+  public void rightLeft(double speed){
+    rightMotor.set(-1 * speed);
+    leftMotor.set(speed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    forwardBackward(controller.getLeftY());
+    rightLeft(controller.getRightX());
   }
 
   @Override
