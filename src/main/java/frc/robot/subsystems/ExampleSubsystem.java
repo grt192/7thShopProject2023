@@ -23,12 +23,12 @@ public class ExampleSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
-    rightMotor = new WPI_TalonSRX(14); //change ID ports
-    rightFollower = new WPI_TalonSRX(14);
+    rightMotor = new WPI_TalonSRX(0); //change ID ports
+    rightFollower = new WPI_TalonSRX(1);
     rightFollower.follow(rightMotor);
 
-    leftMotor = new WPI_TalonSRX(14);
-    leftFollower = new WPI_TalonSRX(14);
+    leftMotor = new WPI_TalonSRX(2);
+    leftFollower = new WPI_TalonSRX(3);
     leftFollower.follow(leftMotor);
 
     controller = new XboxController(0); //change port #
