@@ -23,9 +23,12 @@ public class ExampleSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
-    rightMotor = new WPI_TalonSRX(0); //change ID ports
+    rightMotor = new WPI_TalonSRX(0);
     rightFollower = new WPI_TalonSRX(1);
     rightFollower.follow(rightMotor);
+    rightFollower.setInverted(true);
+    rightMotor.setInverted(true); 
+
 
     leftMotor = new WPI_TalonSRX(2);
     leftFollower = new WPI_TalonSRX(3);
@@ -59,20 +62,39 @@ public class ExampleSubsystem extends SubsystemBase {
   }
 
   public void forwardBackward(double speed){
+    speed = speed * 0.2;
     rightMotor.set(speed);
     leftMotor.set(speed);
   }
 
-  public void rightLeft(double speed){
-    rightMotor.set(-1 * speed);
+  public void rightLeft(double speed, double magnitutde){
+    speed = speed * 0.2;
+   
+    rightMotor.set(magnitutde * -1 * speed);
     leftMotor.set(speed);
+  }
+
+  public void bothSticksPressed(double speed, double magnitutde){
+    speed = speed * 0.2;
+    double dir = Math.signum(controller.getRightX());
+
+    rightMotor.set(magnitutde * -1 * speed);
+    leftMotor.set(speed * dir);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    forwardBackward(controller.getLeftY());
-    rightLeft(controller.getRightX());
+
+    if(controller.getRightX() == 0){
+      forwardBackward(controller.getLeftY());
+    } else if(controller.getLeftY() == 0){
+      rightLeft(controller.getRightX(), 1.0);
+    } else {
+      bothSticksPressed(controller.getLeftY(), 1-Math.abs(controller.getRightX()));
+    }
+
+    //rightLeft(controller.getLeftY(), 1-controller.getRightX());
   }
 
   @Override
