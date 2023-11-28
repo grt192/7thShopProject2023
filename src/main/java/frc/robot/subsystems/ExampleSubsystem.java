@@ -23,18 +23,21 @@ public class ExampleSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
+    //right motors
     rightMotor = new WPI_TalonSRX(0);
     rightFollower = new WPI_TalonSRX(1);
     rightFollower.follow(rightMotor);
+
+    //inverting
     rightFollower.setInverted(true);
     rightMotor.setInverted(true); 
 
-
+    //left motors
     leftMotor = new WPI_TalonSRX(2);
     leftFollower = new WPI_TalonSRX(3);
     leftFollower.follow(leftMotor);
 
-    controller = new XboxController(0); //change port #
+    controller = new XboxController(0); //controllers
   }
 
   /**
@@ -61,40 +64,22 @@ public class ExampleSubsystem extends SubsystemBase {
     return false;
   }
 
-  public void forwardBackward(double speed){
-    speed = speed * 0.2;
-    rightMotor.set(speed);
-    leftMotor.set(speed);
-  }
+  public void setSpeeds(double right, double left){
+    right = right * 0.2;
+    left = left * 0.2; //lowers speeds by scalar
 
-  public void rightLeft(double speed, double magnitutde){
-    speed = speed * 0.2;
-   
-    rightMotor.set(magnitutde * -1 * speed);
-    leftMotor.set(speed);
-  }
-
-  public void bothSticksPressed(double speed, double magnitutde){
-    speed = speed * 0.2;
-    double dir = Math.signum(controller.getRightX());
-
-    rightMotor.set(magnitutde * -1 * speed);
-    leftMotor.set(speed * dir);
+    rightMotor.set(right);
+    leftMotor.set(left);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    double x = controller.getRightX(); 
+    double y = controller.getLeftY();
 
-    if(controller.getRightX() == 0){
-      forwardBackward(controller.getLeftY());
-    } else if(controller.getLeftY() == 0){
-      rightLeft(controller.getRightX(), 1.0);
-    } else {
-      bothSticksPressed(controller.getLeftY(), 1-Math.abs(controller.getRightX()));
-    }
-
-    //rightLeft(controller.getLeftY(), 1-controller.getRightX());
+    //values lie between -2 <= x <= 2
+    setSpeeds(x - y, x + y);
   }
 
   @Override
