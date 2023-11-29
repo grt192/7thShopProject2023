@@ -65,8 +65,8 @@ public class ExampleSubsystem extends SubsystemBase {
   }
 
   public void setSpeeds(double right, double left){
-    right = right * 0.2;
-    left = left * 0.2; //lowers speeds by scalar
+    right = right * 0.5;
+    left = left * 0.5; //lowers speeds by scalar
 
     rightMotor.set(right);
     leftMotor.set(left);
@@ -75,11 +75,11 @@ public class ExampleSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double x = controller.getRightX(); 
-    double y = controller.getLeftY();
+    double y = -controller.getLeftY(); 
+    double x = controller.getRightX();
 
     //values lie between -2 <= x <= 2
-    setSpeeds(x - y, x + y);
+    setSpeeds(y - x, x + y);
   }
 
   @Override
