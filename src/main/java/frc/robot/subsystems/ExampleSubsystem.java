@@ -21,6 +21,9 @@ public class ExampleSubsystem extends SubsystemBase {
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
 
+  //scalar for slowing motor speed
+  private final double motorScalar = 0.5;
+
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
     //right motors
@@ -65,8 +68,8 @@ public class ExampleSubsystem extends SubsystemBase {
   }
 
   public void setSpeeds(double right, double left){
-    right = right * 0.5;
-    left = left * 0.5; //lowers speeds by scalar
+    right = right * motorScalar;
+    left = left * motorScalar; //lowers speeds by scalar
 
     rightMotor.set(right);
     leftMotor.set(left);
@@ -75,7 +78,7 @@ public class ExampleSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double y = -controller.getLeftY(); 
+    double y = -controller.getLeftY(); //x-box joystick axis is flipped for y-axis 
     double x = controller.getRightX();
 
     //values lie between -2 <= x <= 2
