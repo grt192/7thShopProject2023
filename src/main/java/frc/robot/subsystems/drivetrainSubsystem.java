@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.XboxController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class ExampleSubsystem extends SubsystemBase {
+public class drivetrainSubsystem extends SubsystemBase {
   
   //motors
   private final WPI_TalonSRX rightMotor;
@@ -25,7 +25,7 @@ public class ExampleSubsystem extends SubsystemBase {
   private final double motorScalar = 0.5;
 
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {
+  public drivetrainSubsystem() {
     //right motors
     rightMotor = new WPI_TalonSRX(0);
     rightFollower = new WPI_TalonSRX(1);
