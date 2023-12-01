@@ -7,10 +7,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import edu.wpi.first.wpilibj.XboxController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class drivetrainSubsystem extends SubsystemBase {
+public class DrivetrainSubsystem extends SubsystemBase {
   
   //motors
   private final WPI_TalonSRX rightMotor;
@@ -18,14 +17,11 @@ public class drivetrainSubsystem extends SubsystemBase {
   private final WPI_TalonSRX leftMotor; 
   private final WPI_TalonSRX leftFollower; 
 
-  //controller (more like CONTROLSLOLOL)
-  private final XboxController controller; 
-
   //scalar for slowing motor speed
   private final double motorScalar = 0.5;
 
   /** Creates a new ExampleSubsystem. */
-  public drivetrainSubsystem() {
+  public DrivetrainSubsystem() {
     //right motors
     rightMotor = new WPI_TalonSRX(0);
     rightFollower = new WPI_TalonSRX(1);
@@ -40,7 +36,6 @@ public class drivetrainSubsystem extends SubsystemBase {
     leftFollower = new WPI_TalonSRX(3);
     leftFollower.follow(leftMotor);
 
-    controller = new XboxController(0); //controllers
   }
 
   /**
@@ -78,11 +73,7 @@ public class drivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double y = -controller.getLeftY(); //x-box joystick axis is flipped for y-axis 
-    double x = controller.getRightX();
-
-    //values lie between -2 <= x <= 2
-    setSpeeds(y - x, x + y);
+    
   }
 
   @Override

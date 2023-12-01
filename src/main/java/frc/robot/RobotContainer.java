@@ -7,10 +7,13 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.drivetrainSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,7 +23,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final drivetrainSubsystem m_exampleSubsystem = new drivetrainSubsystem();
+  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
+  private final FlywheelSubsystem flywheelSubsystem = new FlywheelSubsystem();
+
+  //controller (more like CONTROLSLOLOL)
+  private final XboxController controller; 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -28,6 +35,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    controller = new XboxController(0); //controllers
+
     // Configure the trigger bindings
     configureBindings();
   }
@@ -43,12 +53,38 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    new Trigger(drivetrainSubsystem::exampleCondition)
+        .onTrue(new ExampleCommand(drivetrainSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_driverController.b().whileTrue(drivetrainSubsystem.exampleMethodCommand());
+
+    drivetrainSubsystem.setDefaultCommand(new RunCommand( () -> {
+      double y = -controller.getLeftY(); //x-box joystick axis is flipped for y-axis 
+      double x = controller.getRightX();
+
+      //values lie between -2 <= x <= 2
+      drivetrainSubsystem.setSpeeds(y - x, x + y);
+      
+    } , drivetrainSubsystem));
+
+    flywheelSubsystem.setDefaultCommand(new RunCommand( () -> {
+      double triggerAxis = controller.getRightTriggerAxis();
+      
+      boolean clicked = false;
+
+      if(triggerAxis != 0){
+        clicked = true;
+      } else {
+        clicked = false;
+      }
+
+      if(clicked == true){
+          flywheelSubsystem.setMotorSpeed(0.8);; //double check what way motors spin
+      } //sets the motor speed to 0.8, maybe golbalize variable?
+      
+    } , flywheelSubsystem));
   }
 
   /**
@@ -58,6 +94,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return Autos.exampleAuto(drivetrainSubsystem);
   }
 }
