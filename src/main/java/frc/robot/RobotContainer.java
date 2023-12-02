@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.PnuematicSubsystem;
@@ -16,6 +17,7 @@ public class RobotContainer {
   private final FlywheelSubsystem flywheelSubsystem = new FlywheelSubsystem();
   private final PnuematicSubsystem pnuematic = new PnuematicSubsystem();
 
+
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
 
@@ -23,6 +25,8 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     controller = new XboxController(0);
+
+
   }
 
   private void configureBindings() {
@@ -62,5 +66,26 @@ public class RobotContainer {
       }
 
     }, pnuematic));
+    
+    flywheelSubsystem.setDefaultCommand(new RunCommand( () -> {
+      double triggerAxis = controller.getRightTriggerAxis();
+     
+      boolean clicked = false;
+ 
+ 
+      if(triggerAxis != 0){
+        clicked = true;
+      } else {
+        clicked = false;
+      }
+ 
+ 
+      if(clicked == true){
+          flywheelSubsystem.setMotorSpeed(0.8);; //double check what way motors spin
+      } //sets the motor speed to 0.8, maybe golbalize variable?
+     
+    } , flywheelSubsystem));
+ 
+
   }
 }
