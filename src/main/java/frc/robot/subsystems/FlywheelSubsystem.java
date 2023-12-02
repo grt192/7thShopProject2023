@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
-public class flywheelSubsystems extends SubsystemBase {
+public class FlywheelSubsystem extends SubsystemBase {
     //controllers
     private final XboxController controller;
 
     //motor
     private final WPI_TalonSRX flywheelMotor;
 
-    public flywheelSubsystems() {
+    public FlywheelSubsystem() {
         //controllors
         controller = new XboxController(0); 
 

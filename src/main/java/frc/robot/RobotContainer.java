@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -21,6 +22,8 @@ import edu.wpi.first.wpilibj.XboxController;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
+  private final FlywheelSubsystem flywheelSubsystem = new FlywheelSubsystem();
+
 
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
@@ -31,6 +34,8 @@ public class RobotContainer {
 
     // Configure the trigger bindings
     configureBindings();
+
+
   }
 
   private void configureBindings() {
@@ -38,10 +43,33 @@ public class RobotContainer {
     drivetrainSubsystem.setDefaultCommand(new RunCommand( () -> {
       double y = -controller.getLeftY(); //x-box joystick axis is flipped for y-axis 
       double x = controller.getRightX();
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+    // cancelling on release.
 
       //values lie between -2 <= x <= 2
       drivetrainSubsystem.setSpeeds(y - x, x + y);
       
-    } , drivetrainSubsystem));
+    } , drivetrainSubsystem)); 
+    
+    flywheelSubsystem.setDefaultCommand(new RunCommand( () -> {
+      double triggerAxis = controller.getRightTriggerAxis();
+     
+      boolean clicked = false;
+ 
+ 
+      if(triggerAxis != 0){
+        clicked = true;
+      } else {
+        clicked = false;
+      }
+ 
+ 
+      if(clicked == true){
+          flywheelSubsystem.setMotorSpeed(0.8);; //double check what way motors spin
+      } //sets the motor speed to 0.8, maybe golbalize variable?
+     
+    } , flywheelSubsystem));
+ 
+
   }
 }
