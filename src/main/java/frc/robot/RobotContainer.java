@@ -53,9 +53,7 @@ public class RobotContainer {
     
     flywheelSubsystem.setDefaultCommand(new RunCommand( () -> {
       double triggerAxis = controller.getRightTriggerAxis();
-     
       boolean clicked = false;
- 
  
       if(triggerAxis != 0){
         clicked = true;
@@ -63,13 +61,11 @@ public class RobotContainer {
         clicked = false;
       }
  
- 
       if(clicked == true){
           flywheelSubsystem.setMotorSpeed(0.8);; //double check what way motors spin
       } //sets the motor speed to 0.8, maybe golbalize variable?
      
     } , flywheelSubsystem));
- 
 
   }
 }
