@@ -18,7 +18,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final WPI_TalonSRX leftFollower; 
 
   //scalar for slowing motor speed
-  private final double motorScalar = 0.5;
+  private final double motorScalar = 0.8;
 
   public DrivetrainSubsystem() {
     //right motors
