@@ -17,5 +17,4 @@ public class FlywheelSubsystem extends SubsystemBase {
     public void setMotorSpeed(double speed){
         flywheelMotor.set(speed);
     }
-
 }
