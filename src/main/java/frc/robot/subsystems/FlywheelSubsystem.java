@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 
 public class FlywheelSubsystem extends SubsystemBase {
-    //controllers
+    //controller
     private final XboxController controller;
 
     //motor
