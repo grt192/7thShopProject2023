@@ -73,14 +73,12 @@ public class RobotContainer {
  
       if(triggerAxis != 0){
         clicked = true;
+        flywheelSubsystem.setMotorSpeed(0.8); //double check what way motors spin
       } else {
         clicked = false;
+        flywheelSubsystem.setMotorSpeed(0);
       }
- 
-      if(clicked == true){
-          flywheelSubsystem.setMotorSpeed(0.8);; //double check what way motors spin
-      } //sets the motor speed to 0.8, maybe golbalize variable?
-     
+
     } , flywheelSubsystem));
 
   }
