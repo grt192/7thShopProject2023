@@ -24,18 +24,15 @@ public class RobotContainer {
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final FlywheelSubsystem flywheelSubsystem = new FlywheelSubsystem();
 
-
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     controller = new XboxController(0); //controllers
-
     // Configure the trigger bindings
     configureBindings();
-
-
+    
   }
 
   private void configureBindings() {
