@@ -15,11 +15,10 @@ public class FlywheelSubsystem extends SubsystemBase {
     private final CANSparkMax flywheelMotor;
 
     public FlywheelSubsystem() {
-        //controllors
+        //controllor 
         controller = new XboxController(0); 
 
         //motor
         flywheelMotor = new CANSparkMax(0, MotorType.kBrushless);
     }
-
 }
