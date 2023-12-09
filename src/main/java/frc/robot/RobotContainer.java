@@ -81,5 +81,15 @@ public class RobotContainer {
 
     } , flywheelSubsystem));
 
+    pnuematic.setDefaultCommand(new RunCommand(() -> {
+      
+      //press A to extend the pnuematic and B to retract it
+      if(controller.getAButtonPressed()){
+        pnuematic.liftPnuem();
+      } else if(controller.getBButtonPressed()){
+        pnuematic.lowerPnuem();
+      }
+
+    }, pnuematic));
   }
 }

@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
-
 public class PnuematicSubsystem extends SubsystemBase {
 
   DoubleSolenoid chuteSolenoid; 
