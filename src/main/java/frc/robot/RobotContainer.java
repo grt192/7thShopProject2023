@@ -11,26 +11,22 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.subsystems.PnuematicSubsystem;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
 
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
+  
+  //new object from pnuematics class
+  private final PnuematicSubsystem pnuematic = new PnuematicSubsystem();
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    controller = new XboxController(0); //controllers
-
     // Configure the trigger bindings
     configureBindings();
+    controller = new XboxController(0);
   }
 
   private void configureBindings() {
@@ -43,5 +39,15 @@ public class RobotContainer {
       drivetrainSubsystem.setSpeeds(y - x, x + y);
       
     } , drivetrainSubsystem));
+    pnuematic.setDefaultCommand(new RunCommand(() -> {
+      
+      //press A to extend the pnuematic and B to retract it
+      if(controller.getAButtonPressed()){
+        pnuematic.liftPnuem();
+      } else if(controller.getBButtonPressed()){
+        pnuematic.lowerPnuem();
+      }
+
+    }, pnuematic));
   }
 }
