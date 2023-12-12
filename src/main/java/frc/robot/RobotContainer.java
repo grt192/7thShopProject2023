@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.FlywheelSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -16,12 +17,11 @@ import frc.robot.subsystems.PnuematicSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
+  private final FlywheelSubsystem flywheelSubsystem = new FlywheelSubsystem();
+  private final PnuematicSubsystem pnuematic = new PnuematicSubsystem();
 
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
-  
-  //new object from pnuematics class
-  private final PnuematicSubsystem pnuematic = new PnuematicSubsystem();
 
   public RobotContainer() {
     // Configure the trigger bindings
@@ -39,6 +39,21 @@ public class RobotContainer {
       drivetrainSubsystem.setSpeeds(y - x, x + y);
       
     } , drivetrainSubsystem));
+
+    flywheelSubsystem.setDefaultCommand(new RunCommand( () -> {
+      double triggerAxis = controller.getRightTriggerAxis();
+      boolean clicked = false;
+ 
+      if(triggerAxis != 0){
+        clicked = true;
+        flywheelSubsystem.setMotorSpeed(0.8); //double check what way motors spin
+      } else {
+        clicked = false;
+        flywheelSubsystem.setMotorSpeed(0);
+      }
+
+    } , flywheelSubsystem));
+    
     pnuematic.setDefaultCommand(new RunCommand(() -> {
       
       //press A to extend the pnuematic and B to retract it
