@@ -19,9 +19,6 @@ public class RobotContainer {
 
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
-  
-  //new object from pnuematics class
-  private final PnuematicSubsystem pnuematic = new PnuematicSubsystem();
 
   public RobotContainer() {
     // Configure the trigger bindings
@@ -82,7 +79,6 @@ public class RobotContainer {
       }
 
     } , flywheelSubsystem));
-
     pnuematic.setDefaultCommand(new RunCommand(() -> {
       
       //press A to extend the pnuematic and B to retract it
