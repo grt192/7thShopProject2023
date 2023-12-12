@@ -5,23 +5,26 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+
 
 public class PnuematicSubsystem extends SubsystemBase {
 
-  private final Solenoid chuteSolenoid;
+  DoubleSolenoid chuteSolenoid; 
   
   public PnuematicSubsystem() {
-    chuteSolenoid = new Solenoid(null, 0);
+    chuteSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
   }
 
   //extends pnuematic
   public void liftPnuem(){ 
-    chuteSolenoid.set(true);
+    chuteSolenoid.set(kForward);
   }
 
   //retracts pnuematic
   public void lowerPnuem(){
-    chuteSolenoid.set(false);
+    chuteSolenoid.set(kReverse);
   }
 }
