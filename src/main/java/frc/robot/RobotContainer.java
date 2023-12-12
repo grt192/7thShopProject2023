@@ -24,10 +24,13 @@ public class RobotContainer {
 
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
+  private final XboxController DTcontroller; 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    controller = new XboxController(0); //controllers
+    controller = new XboxController(1); //controllers
+    DTcontroller = new XboxController(0);
+
     // Configure the trigger bindings
     configureBindings();
     
@@ -36,8 +39,8 @@ public class RobotContainer {
   private void configureBindings() {
 
     drivetrainSubsystem.setDefaultCommand(new RunCommand( () -> {
-      double y = -controller.getLeftY(); //x-box joystick axis is flipped for y-axis 
-      double x = controller.getRightX();
+      double y = -DTcontroller.getLeftY(); //x-box joystick axis is flipped for y-axis 
+      double x = DTcontroller.getRightX();
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
 
