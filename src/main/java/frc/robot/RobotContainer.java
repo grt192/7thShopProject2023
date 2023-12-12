@@ -4,14 +4,11 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.subsystems.PnuematicSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,6 +20,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final FlywheelSubsystem flywheelSubsystem = new FlywheelSubsystem();
+  private final PnuematicSubsystem pnuematic = new PnuematicSubsystem();
 
   //controller (more like CONTROLSLOLOL)
   private final XboxController controller; 
@@ -61,6 +59,17 @@ public class RobotContainer {
       }
 
     } , flywheelSubsystem));
+
+    pnuematic.setDefaultCommand(new RunCommand(() -> {
+      
+      //press A to extend the pnuematic and B to retract it
+      if(controller.getAButtonPressed()){
+        pnuematic.liftPnuem();
+      } else if(controller.getBButtonPressed()){
+        pnuematic.lowerPnuem();
+      }
+
+    }, pnuematic));
 
   }
 }
