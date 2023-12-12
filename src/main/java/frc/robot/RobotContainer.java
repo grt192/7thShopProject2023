@@ -46,7 +46,7 @@ public class RobotContainer {
  
       if(triggerAxis != 0){
         clicked = true;
-        flywheelSubsystem.setMotorSpeed(0.8); //double check what way motors spin
+        flywheelSubsystem.setMotorSpeed(0.57); //double check what way motors spin
       } else {
         clicked = false;
         flywheelSubsystem.setMotorSpeed(0);
