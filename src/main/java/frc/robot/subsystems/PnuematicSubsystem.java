@@ -15,7 +15,7 @@ public class PnuematicSubsystem extends SubsystemBase {
   
   public PnuematicSubsystem() {
     chuteSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 7);
-    chuteSolenoid.set(kForward);
+    chuteSolenoid.set(kReverse);
   }
 
   //extends pnuematic
